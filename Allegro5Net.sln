@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+# SharpDevelop 4.1.0.8000
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Allegro5Net", "Allegro5Net\Allegro5Net.csproj", "{7BC0A109-B89C-44D8-986F-C85D07132E8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Allegro5NetTests", "Allegro5NetTests\Allegro5NetTests.csproj", "{BFF67920-A19B-4B19-B5B5-C9C9262DB869}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7BC0A109-B89C-44D8-986F-C85D07132E8A}.Debug|x86.Build.0 = Debug|x86
+		{7BC0A109-B89C-44D8-986F-C85D07132E8A}.Debug|x86.ActiveCfg = Debug|x86
+		{7BC0A109-B89C-44D8-986F-C85D07132E8A}.Release|x86.Build.0 = Release|x86
+		{7BC0A109-B89C-44D8-986F-C85D07132E8A}.Release|x86.ActiveCfg = Release|x86
+		{BFF67920-A19B-4B19-B5B5-C9C9262DB869}.Debug|x86.Build.0 = Debug|x86
+		{BFF67920-A19B-4B19-B5B5-C9C9262DB869}.Debug|x86.ActiveCfg = Debug|x86
+		{BFF67920-A19B-4B19-B5B5-C9C9262DB869}.Release|x86.Build.0 = Release|x86
+		{BFF67920-A19B-4B19-B5B5-C9C9262DB869}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+EndGlobal

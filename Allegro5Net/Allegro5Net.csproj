@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{7BC0A109-B89C-44D8-986F-C85D07132E8A}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Allegro5Net</RootNamespace>
+    <AssemblyName>Allegro5Net</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <SignAssembly>False</SignAssembly>
+    <DelaySign>False</DelaySign>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AL5\Bitmap.cs" />
+    <Compile Include="AL5\Font.cs" />
+    <Compile Include="AL5\Keyboard.cs" />
+    <Compile Include="AL5\Mouse.cs" />
+    <Compile Include="AL5\Timer.cs" />
+    <Compile Include="AL5\Ttf.cs" />
+    <Compile Include="Base.cs" />
+    <Compile Include="Bitmap.cs" />
+    <Compile Include="Color.cs" />
+    <Compile Include="Display.cs" />
+    <Compile Include="EventQueue.cs" />
+    <Compile Include="EventQueue.Dispatch.cs">
+      <DependentUpon>EventQueue.Dispatch.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Font.cs" />
+    <Compile Include="Graphics.cs" />
+    <Compile Include="IALEventSource.cs" />
+    <Compile Include="ImageAddon.cs" />
+    <Compile Include="Keyboard.cs" />
+    <Compile Include="Keycodes.cs" />
+    <Compile Include="Mouse.cs" />
+    <Compile Include="Point2D.cs" />
+    <Compile Include="AL5\Display.cs" />
+    <Compile Include="AL5\Events.cs">
+      <DependentUpon>Events.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Boilerplate.cs">
+      <DependentUpon>Boilerplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="System.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Timer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EventQueue.Dispatch.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EventQueue.Dispatch.cs</LastGenOutput>
+    </None>
+    <None Include="AL5\Events.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Events.cs</LastGenOutput>
+    </None>
+    <None Include="Boilerplate.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Boilerplate.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AL5" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ProfilingSessions\Session20111004_224108.sdps" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>

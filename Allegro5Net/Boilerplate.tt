@@ -1,0 +1,60 @@
+﻿<#@ template language="C#" #>
+<#@ output extension=".cs" #>
+
+/*
+ * Created by SharpDevelop.
+ * User: Skrylar
+ * Date: 10/1/2011
+ * Time: 9:20 PM
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
+
+namespace Allegro5Net
+{
+<# Base("Display", "AL5.Display.al_destroy_display"); #>
+<# Base("EventQueue", "AL5.Events.al_destroy_event_queue"); #>
+<# Base("Bitmap", "AL5.Bitmap.al_destroy_bitmap"); #>
+<# Base("Timer", "AL5.Timer.al_destroy_timer"); #>
+<# /*Base("Font", "AL5.Font.al_destroy_font");*/ #>
+}
+
+<#+
+void Handle()
+{
+	this.WriteLine("protected IntPtr mHandle;");
+	this.WriteLine("public IntPtr Handle { get { return mHandle; } }");
+}
+
+void DisposeBoiler(string name)
+{
+	this.WriteLine("public void Dispose() { Dispose(true); }");
+	this.WriteLine("public bool IsDisposed { get { return (mHandle == IntPtr.Zero); } }");
+	this.WriteLine("~"+name+"() {");
+	this.WriteLine("	Dispose(false);");
+	this.WriteLine("}");
+}
+
+void Base(string name, string dtor)
+{
+	PushIndent("\t");
+	this.WriteLine("public partial class "+name+" : IDisposable");
+	this.WriteLine("{");
+
+	PushIndent("\t");
+	Handle();
+	DisposeBoiler(name);
+	this.WriteLine("protected void Dispose(bool disposing)");
+	this.WriteLine("{");
+	this.WriteLine("	if (!IsDisposed) {");
+	this.WriteLine("		"+dtor+"(mHandle);");
+	this.WriteLine("		mHandle = IntPtr.Zero;");
+	this.WriteLine("	}");
+	this.WriteLine("}");
+	PopIndent();
+
+	this.WriteLine("}");
+	PopIndent();
+}
+#>

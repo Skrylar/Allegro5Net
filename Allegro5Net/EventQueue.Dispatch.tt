@@ -1,0 +1,118 @@
+﻿<#@ template language="C#" #>
+<#@ output extension=".cs" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Collections.ObjectModel" #>
+
+/*
+ * Created by SharpDevelop.
+ * User: Skrylar
+ * Date: 10/1/2011
+ * Time: 9:20 PM
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
+
+namespace Allegro5Net
+{
+	/// <summary>
+	/// Description of EventQueue.
+	/// </summary>
+	public partial class EventQueue
+	{
+		#region Delegate Declarations
+<# PushIndent("\t\t"); DeclareDelegates(); PopIndent(); #>
+		#endregion
+	
+		#region Event Declarations
+<# PushIndent("\t\t"); DeclareEvents(); PopIndent(); #>
+		#endregion
+
+		public void Dispatch(ref AL5.Events.ALEvent evt)
+		{
+			switch (evt.type)
+			{
+<# PushIndent("\t\t\t\t"); DeclareDispatchCases(); PopIndent(); #>
+				default: throw new NotImplementedException();
+			}
+		}
+	}
+}
+
+<#+
+
+void DeclareDelegates()
+{
+	Dictionary<string, bool> typeDefined = new Dictionary<string, bool>();
+	foreach (EventBind b in EventMapping)
+	{
+		if (!typeDefined.ContainsKey(b.evtTypeName))
+		{
+			typeDefined[b.evtTypeName] = true;
+			WriteLine("public delegate void "+b.evtTypeName+"Handler(ref AL5.Events."+b.evtTypeName+" evt);");
+		}
+	}
+}
+
+void DeclareEvents()
+{
+	foreach (EventBind b in EventMapping)
+	{
+		WriteLine("public event "+b.evtTypeName+"Handler On"+b.friendlyName+";");
+	}
+}
+
+void DeclareDispatchCases()
+{
+	foreach (EventBind b in EventMapping)
+	{
+		WriteLine("case AL5.Events."+b.constName+":");
+		PushIndent("\t");
+		WriteLine("if (On"+b.friendlyName+" != null)");
+		WriteLine("\tOn"+b.friendlyName+"(ref evt."+b.evtTypeAccessor+");");
+		WriteLine("break;");
+		PopIndent();
+	}
+}
+
+struct EventBind
+{
+	public string constName;
+	public string friendlyName;
+	public string evtTypeName;
+	public string evtTypeAccessor;
+
+	public EventBind(string a, string b, string c, string d)
+	{
+		this.constName = a;
+		this.friendlyName = b;
+		this.evtTypeName = c;
+		this.evtTypeAccessor = d;
+	}
+}
+
+static readonly IList<EventBind> EventMapping = new ReadOnlyCollection<EventBind> (new[] {
+	new EventBind("EVENT_JOYSTICK_AXIS", "JoystickAxis", "JoystickEvent", "joystick"),
+	new EventBind("EVENT_JOYSTICK_BUTTON_DOWN", "JoystickButtonDown", "JoystickEvent", "joystick"),
+	new EventBind("EVENT_JOYSTICK_BUTTON_UP", "JoystickButtonUp", "JoystickEvent", "joystick"),
+	new EventBind("EVENT_JOYSTICK_CONFIGURATION", "JoystickConfiguration", "JoystickEvent", "joystick"),
+	new EventBind("EVENT_KEY_DOWN", "KeyDown", "KeyboardEvent", "keyboard"),
+	new EventBind("EVENT_KEY_CHAR", "KeyChar", "KeyboardEvent", "keyboard"),
+	new EventBind("EVENT_KEY_UP", "KeyUp", "KeyboardEvent", "keyboard"),
+	new EventBind("EVENT_MOUSE_AXES", "MouseAxes", "MouseEvent", "mouse"),
+	new EventBind("EVENT_MOUSE_BUTTON_DOWN", "MouseButtonDown", "MouseEvent", "mouse"),
+	new EventBind("EVENT_MOUSE_BUTTON_UP", "MouseButtonUp", "MouseEvent", "mouse"),
+	new EventBind("EVENT_MOUSE_ENTER_DISPLAY", "MouseEnterDisplay", "MouseEvent", "mouse"),
+	new EventBind("EVENT_MOUSE_LEAVE_DISPLAY", "MouseLeaveDisplay", "MouseEvent", "mouse"),
+	new EventBind("EVENT_MOUSE_WARPED", "MouseWarped", "MouseEvent", "mouse"),
+	new EventBind("EVENT_TIMER", "Timer", "TimerEvent", "timer"),
+	new EventBind("EVENT_DISPLAY_EXPOSE", "DisplayExpose", "DisplayEvent", "display"),
+	new EventBind("EVENT_DISPLAY_RESIZE", "DisplayResize", "DisplayEvent", "display"),
+	new EventBind("EVENT_DISPLAY_CLOSE", "DisplayClose", "DisplayEvent", "display"),
+	new EventBind("EVENT_DISPLAY_LOST", "DisplayLost", "DisplayEvent", "display"),
+	new EventBind("EVENT_DISPLAY_FOUND", "DisplayFound", "DisplayEvent", "display"),
+	new EventBind("EVENT_DISPLAY_SWITCH_IN", "DisplaySwitchIn", "DisplayEvent", "display"),
+	new EventBind("EVENT_DISPLAY_SWITCH_OUT", "DisplaySwitchOut", "DisplayEvent", "display"),
+	new EventBind("EVENT_DISPLAY_ORIENTATION", "DisplayOrientation", "DisplayEvent", "display")
+});
+#>
